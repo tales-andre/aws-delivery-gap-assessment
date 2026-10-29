@@ -1,10 +1,15 @@
 # AWS delivery gap assessment: method, evidence kit and sample report
 
-> "Independently determine what was actually implemented and completed, identify gaps between contracted scope and observable technical evidence, and quantify completion at both the task and overall project level."
+Your vendor says the AWS work is done. Before you accept it (or pay the last milestone), you want an independent answer: what was actually built, what is missing, and how complete the project really is, task by task.
 
 This repository is how I do that for AWS work: a written **method**, a small **read-only evidence kit** (Python + boto3, tested offline), and a **sample report** about a fictional company and vendor that shows the output.
 
 > **Honesty note.** This is an open-source method and demo, not a record of a client engagement. The sample report describes a fictional company (Acme Fieldwork, Inc.) and a fictional, unnamed vendor. Its account data is simulated.
+
+**Two ways to use it**
+
+- **Short review (evidence package provided).** You send the SOW, the task list and the evidence you already have (repo access, exports, screenshots). No account access needed. You get completion by task and by category, the gaps, and a short written report.
+- **Full assessment (read-only account access).** Everything above, plus evidence collected directly from the AWS account and a Terraform-vs-reality check, as described in [method.md](method.md).
 
 ![First page of the sample assessment](docs/sample-report-page1.png)
 
