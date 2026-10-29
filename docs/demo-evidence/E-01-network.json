@@ -1,0 +1,151 @@
+{
+  "check": "network",
+  "collected_at": "2026-10-29T10:46:44.340299+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-01",
+  "facts": {
+    "vpcs": [
+      {
+        "azs": [
+          "us-east-1a",
+          "us-east-1b",
+          "us-east-1c",
+          "us-east-1d",
+          "us-east-1e",
+          "us-east-1f"
+        ],
+        "cidr": "172.31.0.0/16",
+        "is_default": true,
+        "name": null,
+        "nat_gateway_azs": [],
+        "nat_gateways": [],
+        "subnets": [
+          {
+            "az": "us-east-1a",
+            "cidr": "172.31.0.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-a7be109ad94a1bd44"
+          },
+          {
+            "az": "us-east-1b",
+            "cidr": "172.31.16.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-0e293d201d93e6498"
+          },
+          {
+            "az": "us-east-1c",
+            "cidr": "172.31.32.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-af697c2ba15d95bd5"
+          },
+          {
+            "az": "us-east-1d",
+            "cidr": "172.31.48.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-88ab514f17774a394"
+          },
+          {
+            "az": "us-east-1e",
+            "cidr": "172.31.64.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-3fd6342cb43fc60a1"
+          },
+          {
+            "az": "us-east-1f",
+            "cidr": "172.31.80.0/20",
+            "default_route": null,
+            "kind": "isolated",
+            "name": null,
+            "subnet_id": "subnet-203fcbd855d7f27d0"
+          }
+        ],
+        "vpc_id": "vpc-ef7d6f55c35a95493"
+      },
+      {
+        "azs": [
+          "us-east-1a",
+          "us-east-1b",
+          "us-east-1c"
+        ],
+        "cidr": "10.20.0.0/16",
+        "is_default": false,
+        "name": "fieldwork-prod",
+        "nat_gateway_azs": [
+          "us-east-1a"
+        ],
+        "nat_gateways": [
+          {
+            "az": "us-east-1a",
+            "id": "nat-df306ced881ed129b",
+            "state": "available",
+            "subnet_id": "subnet-5b7578760d4f0dc6b"
+          }
+        ],
+        "subnets": [
+          {
+            "az": "us-east-1a",
+            "cidr": "10.20.10.0/24",
+            "default_route": "nat-df306ced881ed129b",
+            "kind": "private-nat",
+            "name": null,
+            "subnet_id": "subnet-452d1f4731b27abdc"
+          },
+          {
+            "az": "us-east-1b",
+            "cidr": "10.20.11.0/24",
+            "default_route": "nat-df306ced881ed129b",
+            "kind": "private-nat",
+            "name": null,
+            "subnet_id": "subnet-c042c6733c6315bce"
+          },
+          {
+            "az": "us-east-1c",
+            "cidr": "10.20.12.0/24",
+            "default_route": "nat-df306ced881ed129b",
+            "kind": "private-nat",
+            "name": null,
+            "subnet_id": "subnet-d7a86e55fe8f09fa5"
+          },
+          {
+            "az": "us-east-1a",
+            "cidr": "10.20.0.0/24",
+            "default_route": "igw-44100cba9cf826189",
+            "kind": "public",
+            "name": null,
+            "subnet_id": "subnet-5b7578760d4f0dc6b"
+          },
+          {
+            "az": "us-east-1b",
+            "cidr": "10.20.1.0/24",
+            "default_route": "igw-44100cba9cf826189",
+            "kind": "public",
+            "name": null,
+            "subnet_id": "subnet-afd07b484492a784c"
+          },
+          {
+            "az": "us-east-1c",
+            "cidr": "10.20.2.0/24",
+            "default_route": "igw-44100cba9cf826189",
+            "kind": "public",
+            "name": null,
+            "subnet_id": "subnet-8061a5a3b8fa8cc2a"
+          }
+        ],
+        "vpc_id": "vpc-72e038c06f4c04bac"
+      }
+    ]
+  },
+  "region": "us-east-1",
+  "title": "VPCs, subnets, routes and NAT gateways"
+}

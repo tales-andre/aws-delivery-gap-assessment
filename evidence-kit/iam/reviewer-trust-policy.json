@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReviewerAssumesRoleWithExternalIdAndMfa",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::REVIEWER_ACCOUNT_ID:root" },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "StringEquals": { "sts:ExternalId": "REPLACE_WITH_EXTERNAL_ID" },
+        "Bool": { "aws:MultiFactorAuthPresent": "true" }
+      }
+    }
+  ]
+}

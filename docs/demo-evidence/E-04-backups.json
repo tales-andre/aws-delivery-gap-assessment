@@ -1,0 +1,31 @@
+{
+  "check": "backups",
+  "collected_at": "2026-10-29T10:46:45.089037+00:00",
+  "collection_status": "partial",
+  "errors": [
+    {
+      "call": "backup:ListBackupSelections 51325280-c40a-411f-8421-6bd41695c896",
+      "error": "NotImplementedError: The list_backup_selections action has not been implemented"
+    }
+  ],
+  "evidence_id": "E-04",
+  "facts": {
+    "backup_plans": [
+      {
+        "id": "51325280-c40a-411f-8421-6bd41695c896",
+        "name": "fieldwork-daily",
+        "rules": [
+          {
+            "delete_after_days": 35,
+            "name": "daily-35d",
+            "schedule": "cron(0 5 * * ? *)",
+            "vault": "Default"
+          }
+        ],
+        "selections": null
+      }
+    ]
+  },
+  "region": "us-east-1",
+  "title": "AWS Backup plans"
+}

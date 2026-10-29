@@ -1,0 +1,72 @@
+{
+  "check": "tagging",
+  "collected_at": "2026-10-29T10:46:45.391980+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-08",
+  "facts": {
+    "missing_any": [
+      {
+        "id": "fieldwork-prod-db",
+        "missing": [
+          "cost-center"
+        ],
+        "type": "rds:db"
+      },
+      {
+        "id": "fieldwork-public",
+        "missing": [
+          "cost-center"
+        ],
+        "type": "elbv2:load-balancer"
+      },
+      {
+        "id": "acme-fieldwork-cloudtrail-logs",
+        "missing": [
+          "env",
+          "owner",
+          "cost-center"
+        ],
+        "type": "s3:bucket"
+      }
+    ],
+    "required_tags": [
+      "env",
+      "owner",
+      "cost-center"
+    ],
+    "resources": [
+      {
+        "id": "fieldwork-prod-db",
+        "missing": [
+          "cost-center"
+        ],
+        "type": "rds:db"
+      },
+      {
+        "id": "fieldwork-prod",
+        "missing": [],
+        "type": "eks:cluster"
+      },
+      {
+        "id": "fieldwork-public",
+        "missing": [
+          "cost-center"
+        ],
+        "type": "elbv2:load-balancer"
+      },
+      {
+        "id": "acme-fieldwork-cloudtrail-logs",
+        "missing": [
+          "env",
+          "owner",
+          "cost-center"
+        ],
+        "type": "s3:bucket"
+      }
+    ],
+    "unreadable": []
+  },
+  "region": "us-east-1",
+  "title": "Required tags on in-scope resources"
+}

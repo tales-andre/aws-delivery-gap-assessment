@@ -1,0 +1,31 @@
+task_id,task,weight,criterion_id,criterion,status,evidence,note
+T1,Network,10,1.1,VPC spans three Availability Zones,V,E-01,Three public and three private subnets in us-east-1a/b/c
+T1,Network,10,1.2,Workloads run in private subnets,V,E-01 E-02,Node group subnets route 0.0.0.0/0 to a NAT gateway
+T1,Network,10,1.3,One NAT gateway per Availability Zone,C,E-01 T-01 R-01,"One NAT gateway in us-east-1a; IaC sets single_nat_gateway = true"
+T2,EKS cluster,15,2.1,Cluster on a Kubernetes version in standard support,V,E-02,
+T2,EKS cluster,15,2.2,API endpoint private or limited to the office CIDR,C,E-02 D-02,Public endpoint open to 0.0.0.0/0; design doc says private
+T2,EKS cluster,15,2.3,Managed node group across three AZs,V,E-02,
+T2,EKS cluster,15,2.4,Control plane audit logging enabled,V,E-02,
+T3,PostgreSQL database,15,3.1,Private and not publicly accessible,V,E-03,
+T3,PostgreSQL database,15,3.2,Multi-AZ in production,C,E-03 T-01 D-01,"Single-AZ live; drift shows multi_az changed outside Terraform; status report says Multi-AZ done"
+T3,PostgreSQL database,15,3.3,Storage encrypted with KMS,V,E-03,
+T3,PostgreSQL database,15,3.4,Deletion protection on,V,E-03,
+T4,Backups and restore,10,4.1,RDS automated backup retention of 14 days or more,C,E-03 T-01,Seven days live
+T4,Backups and restore,10,4.2,AWS Backup daily plan with 35-day retention,V,E-04,
+T4,Backups and restore,10,4.3,Restore test performed and recorded,S,D-04 E-09,Record dated before the CloudTrail event history window; cannot be confirmed
+T5,IAM and access,15,5.1,No IAM users with administrator rights; people sign in through SSO,C,E-05 E-09,Two IAM users with AdministratorAccess (one direct; one via group)
+T5,IAM and access,15,5.2,Workloads use IAM roles for service accounts,V,E-05,
+T5,IAM and access,15,5.3,MFA on any remaining console user,M,E-05,Console user without MFA
+T5,IAM and access,15,5.4,CI deploys with an OIDC role and no static keys,V,E-05 E-09 P-01,AssumeRoleWithWebIdentity from the staging pipeline
+T6,Audit logging,5,6.1,Multi-region CloudTrail trail is logging,V,E-06,
+T6,Audit logging,5,6.2,Log file validation enabled,V,E-06,
+T6,Audit logging,5,6.3,Logs delivered to a dedicated S3 bucket,V,E-06,
+T7,CI/CD,15,7.1,Pull requests build and run tests,V,P-01 R-01,
+T7,CI/CD,15,7.2,Merge to main deploys to staging,V,P-01 E-09,
+T7,CI/CD,15,7.3,Production deploy through the pipeline with manual approval,S,R-01 P-01,Approval gate defined in the workflow; no production run in the history yet
+T8,Web application firewall,5,8.1,Web ACL associated with the public load balancer,M,E-07 R-01,No web ACL; draft on an unmerged branch
+T8,Web application firewall,5,8.2,AWS managed rule groups enabled,M,E-07,
+T9,Cost allocation tags,5,9.1,"Required tags (env, owner, cost-center) on in-scope resources",M,E-08,Database and load balancer lack cost-center; log bucket untagged
+T9,Cost allocation tags,5,9.2,Tags activated for cost allocation in Billing,S,D-03,Screenshot only; billing access not in scope
+T10,Documentation and handover,5,10.1,Architecture document matches the deployed environment,C,D-02 E-01 E-03,Shows Multi-AZ database and one NAT gateway per AZ
+T10,Documentation and handover,5,10.2,Deploy and restore runbooks delivered,S,D-04,Delivered; not exercised during the assessment

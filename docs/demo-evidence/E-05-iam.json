@@ -1,0 +1,67 @@
+{
+  "check": "iam",
+  "collected_at": "2026-10-29T10:46:45.128003+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-05",
+  "facts": {
+    "oidc_federated_roles": [
+      {
+        "oidc_provider": "token.actions.githubusercontent.com",
+        "role": "github-deploy-staging"
+      },
+      {
+        "oidc_provider": "oidc.eks.us-east-1.amazonaws.com/id/FS7FVzcgSo",
+        "role": "fieldwork-api-irsa"
+      }
+    ],
+    "oidc_providers": [
+      "token.actions.githubusercontent.com",
+      "oidc.eks.us-east-1.amazonaws.com/id/FS7FVzcgSo"
+    ],
+    "users": [
+      {
+        "access_keys": [
+          {
+            "age_days": 0,
+            "created": "2026-10-29T10:46:43.474381+00:00",
+            "key_id_suffix": "3THY",
+            "last_used": null,
+            "last_used_service": "N/A",
+            "status": "Active"
+          }
+        ],
+        "admin": true,
+        "admin_via": [
+          "attached:AdministratorAccess"
+        ],
+        "console_password": false,
+        "created": "2026-10-29T10:46:43.466503+00:00",
+        "mfa_devices": 0,
+        "name": "vendor-deploy"
+      },
+      {
+        "access_keys": [],
+        "admin": true,
+        "admin_via": [
+          "group:admins:AdministratorAccess"
+        ],
+        "console_password": true,
+        "created": "2026-10-29T10:46:43.483947+00:00",
+        "mfa_devices": 0,
+        "name": "admin-temp"
+      },
+      {
+        "access_keys": [],
+        "admin": false,
+        "admin_via": [],
+        "console_password": false,
+        "created": "2026-10-29T10:46:43.505345+00:00",
+        "mfa_devices": 0,
+        "name": "readonly-auditor"
+      }
+    ]
+  },
+  "region": "us-east-1",
+  "title": "IAM users, admin rights, MFA, keys and OIDC roles"
+}

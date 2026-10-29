@@ -1,0 +1,25 @@
+{
+  "check": "cloudtrail",
+  "collected_at": "2026-10-29T10:46:45.313542+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-06",
+  "facts": {
+    "trails": [
+      {
+        "home_region": "us-east-1",
+        "is_logging": true,
+        "kms_key_set": false,
+        "latest_delivery": "2026-10-29T10:46:45-03:00",
+        "latest_delivery_error": null,
+        "log_file_validation": true,
+        "multi_region": true,
+        "name": "acme-account-trail",
+        "organization_trail": false,
+        "s3_bucket": "acme-fieldwork-cloudtrail-logs"
+      }
+    ]
+  },
+  "region": "us-east-1",
+  "title": "CloudTrail trails and logging status"
+}

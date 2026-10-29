@@ -1,0 +1,87 @@
+{
+  "check": "change_events",
+  "collected_at": "2026-10-29T10:46:45.612687+00:00",
+  "collection_status": "not_collected",
+  "errors": [
+    {
+      "call": "cloudtrail:LookupEvents CreateCluster",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents UpdateClusterConfig",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateNodegroup",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateDBInstance",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents ModifyDBInstance",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents RestoreDBInstanceFromDBSnapshot",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents RestoreDBInstanceToPointInTime",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents StartRestoreJob",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateWebACL",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents AssociateWebACL",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateTrail",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateUser",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents AttachUserPolicy",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    },
+    {
+      "call": "cloudtrail:LookupEvents CreateAccessKey",
+      "error": "NotImplementedError: The lookup_events action has not been implemented"
+    }
+  ],
+  "evidence_id": "E-09",
+  "facts": {
+    "event_names": [
+      "CreateCluster",
+      "UpdateClusterConfig",
+      "CreateNodegroup",
+      "CreateDBInstance",
+      "ModifyDBInstance",
+      "RestoreDBInstanceFromDBSnapshot",
+      "RestoreDBInstanceToPointInTime",
+      "StartRestoreJob",
+      "CreateWebACL",
+      "AssociateWebACL",
+      "CreateTrail",
+      "CreateUser",
+      "AttachUserPolicy",
+      "CreateAccessKey"
+    ],
+    "events": [],
+    "window_end": "2026-10-29T10:46:43.962027+00:00",
+    "window_start": "2026-07-31T10:46:43.962027+00:00"
+  },
+  "region": "us-east-1",
+  "title": "CloudTrail change events (who created or changed what)"
+}

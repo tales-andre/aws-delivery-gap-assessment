@@ -1,0 +1,20 @@
+{
+  "check": "waf",
+  "collected_at": "2026-10-29T10:46:45.331459+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-07",
+  "facts": {
+    "public_albs": [
+      {
+        "dns": "fieldwork-public-1.us-east-1.elb.amazonaws.com",
+        "lookup_failed": false,
+        "name": "fieldwork-public",
+        "web_acl": null
+      }
+    ],
+    "regional_web_acls": []
+  },
+  "region": "us-east-1",
+  "title": "WAF web ACLs and public load balancers"
+}

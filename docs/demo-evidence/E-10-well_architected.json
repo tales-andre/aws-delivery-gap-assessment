@@ -1,0 +1,17 @@
+{
+  "check": "well_architected",
+  "collected_at": "2026-10-29T10:46:45.648367+00:00",
+  "collection_status": "not_collected",
+  "errors": [
+    {
+      "call": "wellarchitected:ListWorkloads",
+      "error": "ClientError: An error occurred (404) when calling the ListWorkloads operation: Not yet implemented"
+    }
+  ],
+  "evidence_id": "E-10",
+  "facts": {
+    "workloads": []
+  },
+  "region": "us-east-1",
+  "title": "Well-Architected Tool workloads and milestones"
+}

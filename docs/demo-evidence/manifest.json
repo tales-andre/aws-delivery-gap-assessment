@@ -1,0 +1,31 @@
+{
+  "account": "123456789012",
+  "caller_arn": "arn:aws:sts::123456789012:user/moto",
+  "files_sha256": {
+    "E-00-identity.json": "249fd67a604275e5accb4cd17c261ebff01b5c6fa0b963d8f8b50326c5388908",
+    "E-01-network.json": "b4c3eb536beccaf6f823f63fea66b8e8bc3fa883a48f05af86da089054c4e0d1",
+    "E-02-containers.json": "98a524ce4da6dd223efe5f4b87b2179dd9d120db863722000f0d01034221fd76",
+    "E-03-databases.json": "eb764dbc06d18ff31f7d1ffaf5e824836b386c463f33be34c7cbfc4a0b446e2d",
+    "E-04-backups.json": "78a3bbbed14897b881653fd341974797505e32acab5b44a99820478098d8c654",
+    "E-05-iam.json": "67ddc9353ef75a1c5c54f1d2e0650f774547059cbfa071d6246b60947c9b126f",
+    "E-06-cloudtrail.json": "4e6fa25da0ef77f5888e39428e367513331a18f693473799c673d9f2a0abd9fa",
+    "E-07-waf.json": "2f922a4eab8f2fab8e9410c31ef822ea41e8bd69c656623582b5d987d94e879b",
+    "E-08-tagging.json": "74eb259df9bb3d64bca6e36f2c694b9399fba17e22d80326401a32313d1ea3ab",
+    "E-09-change_events.json": "773a414f0fbea9f5cb759e85e8f06375086cc74f6f3fac7817337451c3e06a25",
+    "E-10-well_architected.json": "d6bbc4da6c9df67ca1e9c799b104e10300059c00e48ca7f2a1f089df5d76bcae",
+    "summary.md": "4c39a1b1ba420514fe43014d20694903cfa60c70d003add32a1062dd84060b60"
+  },
+  "finished_at": "2026-10-29T10:46:45.775122+00:00",
+  "kit_commit": null,
+  "kit_version": "0.1.0",
+  "mode": "demo (moto, fictional account)",
+  "notes": [
+    "Demo note: moto does not simulate CloudTrail LookupEvents, AWS Backup selections or the Well-Architected Tool, so those calls show as NOT COLLECTED here. They are covered by botocore Stubber tests in tests/test_checks_stubber.py."
+  ],
+  "platform": "Windows-11-10.0.26300-SP0",
+  "profile": null,
+  "python": "3.13.5",
+  "read_only_guard": true,
+  "region": "us-east-1",
+  "started_at": "2026-10-29T10:46:43.962014+00:00"
+}

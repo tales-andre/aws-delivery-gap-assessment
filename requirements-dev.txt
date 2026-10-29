@@ -1,0 +1,4 @@
+-r requirements.txt
+moto>=5.0
+pytest>=8.0
+markdown>=3.5

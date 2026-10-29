@@ -1,0 +1,392 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Sample delivery gap assessment</title><style>
+@page { size: Letter; margin: 13mm 14mm 16mm 14mm; }
+:root { --ink:#1d232b; --muted:#5b6672; --line:#d5dbe1; --accent:#0b5c8a; --warn:#8a4b00; --bg:#ffffff; }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); background: var(--bg); font-size: 9.1pt; line-height: 1.38; margin: 0; }
+main { max-width: 190mm; margin: 0 auto; }
+h1 { font-size: 16pt; margin: 6px 0 8px; color: var(--accent); }
+h2 { font-size: 11pt; margin: 14px 0 5px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 2px; break-after: avoid; }
+p, ul { margin: 4px 0 6px; }
+li { margin: 2px 0; }
+table { border-collapse: collapse; width: 100%; margin: 5px 0 8px; font-size: 8.4pt; }
+th, td { border: 1px solid var(--line); padding: 3px 5px; vertical-align: top; text-align: left; }
+th { background: #eef2f5; }
+tr { break-inside: avoid; }
+code { font-family: Consolas, monospace; font-size: 8.2pt; background: #f2f4f6; padding: 0 2px; }
+.banner { border: 1.5px solid var(--warn); color: var(--warn); background: #fff6e8; font-weight: 600; padding: 6px 9px; border-radius: 4px; }
+.footer { position: fixed; bottom: -11mm; left: 0; right: 0; text-align: center; font-size: 7.5pt; color: var(--muted); }
+</style></head><body><main><div class="banner">Sample assessment — fictional company and vendor, written to show the method. Not a client deliverable.</div>
+
+<h1>Delivery gap assessment: AWS platform build</h1>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Client</strong></td>
+<td>Acme Fieldwork, Inc. (fictional SaaS for field-service scheduling)</td>
+</tr>
+<tr>
+<td><strong>Vendor</strong></td>
+<td>[Vendor] (fictional, name redacted)</td>
+</tr>
+<tr>
+<td><strong>Contract</strong></td>
+<td>SOW "Production AWS platform", signed 2026-03-02; vendor reported completion 2026-09-30</td>
+</tr>
+<tr>
+<td><strong>AWS account</strong></td>
+<td>[redacted], region us-east-1, production environment only</td>
+</tr>
+<tr>
+<td><strong>Evidence collected</strong></td>
+<td>2026-10-12 to 2026-10-14, read-only role (SecurityAudit + ReadOnlyAccess, data reads denied)</td>
+</tr>
+<tr>
+<td><strong>Reviewer</strong></td>
+<td>Tales Valcacer, AWS Certified Solutions Architect – Professional</td>
+</tr>
+<tr>
+<td><strong>Version</strong></td>
+<td>1.0, 2026-10-19 (after vendor right of reply)</td>
+</tr>
+</tbody>
+</table>
+<h2>1. Executive summary</h2>
+<p>The vendor's final status report (D-01) states that all ten SOW tasks are complete. The evidence supports a weighted completion between <strong>55% (verified)</strong> and <strong>68% (supported)</strong>. One task is complete and verified (audit logging); one is complete but not yet verified in production (CI/CD); seven are partial; one was not started (WAF).</p>
+<ul>
+<li><strong>The production database is single-AZ.</strong> The SOW and the status report say Multi-AZ. The live instance (E-03) and the Terraform drift report (T-01) both show Multi-AZ off; drift shows it was changed outside Terraform.</li>
+<li><strong>Two IAM users have full administrator rights</strong>, one with a long-lived access key and one console user without MFA (E-05). The SOW asked for no admin users and SSO sign-in.</li>
+<li><strong>The EKS API endpoint is open to the internet</strong> (0.0.0.0/0) while the design document says private (E-02, D-02).</li>
+<li><strong>No web application firewall</strong> is in place; the WAF code exists only on an unmerged branch (E-07, R-01).</li>
+<li>In good shape: network layout across three AZs, encrypted private database with deletion protection, AWS Backup plan, IRSA and OIDC roles for CI, CloudTrail with log file validation, and a working build, test and staging pipeline.</li>
+</ul>
+<p><strong>Recommendation:</strong> do not treat the platform as complete. Ask the vendor to close the gap items in section 6 under the current SOW, then re-check only those items.</p>
+<h2>2. Scope and method</h2>
+<p><strong>In scope:</strong> the ten SOW tasks and their 30 acceptance criteria, as agreed with the client before evidence was collected. <strong>Out of scope:</strong> application code quality, load testing, cost optimisation, other accounts and regions.</p>
+<p><strong>Evidence levels</strong> (strongest first): L1 observed in the running system (AWS APIs, CloudTrail, CI run history) · L2 IaC state and plan · L3 repository and pipeline definitions · L4 documents · L5 claims. When sources disagree, the higher level wins and the item is marked <em>Contradicted</em>.</p>
+<p><strong>Scoring</strong> (full rubric in <code>method.md</code>): each criterion is Verified (L1), Supported (L2 to L4 only), Missing, Contradicted, or Unable to assess. Task <em>verified</em> % counts only Verified criteria; <em>supported</em> % adds Supported ones. Project completion is the SOW-weighted average, reported as a range. Statuses are the reviewer's judgments; the table below is computed from <code>scoring.csv</code> by <code>kit.py score</code>.</p>
+<p><strong>Limits:</strong> CloudTrail Event history covers 90 days (from 2026-07-15), so earlier events (such as the restore test, D-04) cannot be confirmed from the account. Billing console access was not granted.</p>
+<h2>3. Completion score</h2>
+<!-- score:begin -->
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th style="text-align: right;">Weight</th>
+<th style="text-align: center;">Criteria V/S/M/C/U</th>
+<th>Status</th>
+<th style="text-align: right;">Verified</th>
+<th style="text-align: right;">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1 Network</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">2/0/0/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">67%</td>
+<td style="text-align: right;">67%</td>
+</tr>
+<tr>
+<td>T2 EKS cluster</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">3/0/0/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">75%</td>
+<td style="text-align: right;">75%</td>
+</tr>
+<tr>
+<td>T3 PostgreSQL database</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">3/0/0/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">75%</td>
+<td style="text-align: right;">75%</td>
+</tr>
+<tr>
+<td>T4 Backups and restore</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">1/1/0/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">33%</td>
+<td style="text-align: right;">67%</td>
+</tr>
+<tr>
+<td>T5 IAM and access</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">2/0/1/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">50%</td>
+</tr>
+<tr>
+<td>T6 Audit logging</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">3/0/0/0/0</td>
+<td>Complete, verified</td>
+<td style="text-align: right;">100%</td>
+<td style="text-align: right;">100%</td>
+</tr>
+<tr>
+<td>T7 CI/CD</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">2/1/0/0/0</td>
+<td>Complete, unverified</td>
+<td style="text-align: right;">67%</td>
+<td style="text-align: right;">100%</td>
+</tr>
+<tr>
+<td>T8 Web application firewall</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">0/0/2/0/0</td>
+<td>Not started</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">0%</td>
+</tr>
+<tr>
+<td>T9 Cost allocation tags</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">0/1/1/0/0</td>
+<td>Partial</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">50%</td>
+</tr>
+<tr>
+<td>T10 Documentation and handover</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">0/1/0/1/0</td>
+<td>Partial</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">50%</td>
+</tr>
+<tr>
+<td><strong>Project (weighted)</strong></td>
+<td style="text-align: right;">100</td>
+<td style="text-align: center;"></td>
+<td></td>
+<td style="text-align: right;"><strong>55%</strong></td>
+<td style="text-align: right;"><strong>68%</strong></td>
+</tr>
+</tbody>
+</table>
+<!-- score:end -->
+
+<p>Weights are the SOW line-item shares of the contract value.</p>
+<h2>4. Evidence by contracted item</h2>
+<table>
+<thead>
+<tr>
+<th>SOW item and vendor claim</th>
+<th>Evidence checked</th>
+<th>Status</th>
+<th>Gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>T1</strong> VPC in 3 AZs, private workloads, NAT per AZ. <em>Claim: done.</em></td>
+<td>E-01 subnets, routes, NAT gateways; T-01; R-01 <code>infra/prod</code></td>
+<td>Partial</td>
+<td>One NAT gateway (us-east-1a) serves all private subnets; IaC sets <code>single_nat_gateway = true</code>.</td>
+</tr>
+<tr>
+<td><strong>T2</strong> EKS, supported version, private API, 3-AZ node group, audit logs. <em>Claim: done.</em></td>
+<td>E-02 cluster and node group; D-02 design doc</td>
+<td>Partial</td>
+<td>Public endpoint open to 0.0.0.0/0, private endpoint off. Contradicts D-02.</td>
+</tr>
+<tr>
+<td><strong>T3</strong> PostgreSQL, private, Multi-AZ, encrypted, deletion protection. <em>Claim: done, Multi-AZ.</em></td>
+<td>E-03 instance; T-01 drift; D-01 status report</td>
+<td>Partial</td>
+<td><code>MultiAZ = false</code>. Drift shows <code>multi_az</code> changed outside Terraform. No change request on file.</td>
+</tr>
+<tr>
+<td><strong>T4</strong> Backups ≥14 days, AWS Backup daily/35 days, restore test. <em>Claim: done, tested.</em></td>
+<td>E-03 retention; E-04 plan; D-04 restore record; E-09</td>
+<td>Partial</td>
+<td>Retention 7 days. Restore record dated 2026-06-18, outside the event window: supported, not verified.</td>
+</tr>
+<tr>
+<td><strong>T5</strong> No admin IAM users, IRSA, MFA, OIDC for CI. <em>Claim: least privilege done.</em></td>
+<td>E-05 users, policies, MFA, keys, roles; E-09 who used them</td>
+<td>Partial</td>
+<td><code>vendor-deploy</code> (AdministratorAccess, active key) and <code>admin-temp</code> (admin via group, console, no MFA).</td>
+</tr>
+<tr>
+<td><strong>T6</strong> Multi-region trail, validation, dedicated bucket. <em>Claim: done.</em></td>
+<td>E-06 trail and status</td>
+<td>Complete, verified</td>
+<td>None.</td>
+</tr>
+<tr>
+<td><strong>T7</strong> PR build and test, auto deploy to staging, prod via pipeline with approval. <em>Claim: done.</em></td>
+<td>P-01 run history; R-01 workflow files; E-09 OIDC role use</td>
+<td>Complete, unverified</td>
+<td>Production job and approval gate exist in the workflow, but no production run has happened yet.</td>
+</tr>
+<tr>
+<td><strong>T8</strong> WAF on public ALB with AWS managed rules. <em>Claim: done.</em></td>
+<td>E-07 web ACLs and ALB association; R-01 branches</td>
+<td>Not started</td>
+<td>No web ACL in the account. Draft code only on unmerged branch <code>feature/waf</code>.</td>
+</tr>
+<tr>
+<td><strong>T9</strong> Required tags, cost allocation activated. <em>Claim: done.</em></td>
+<td>E-08 tags; D-03 screenshot</td>
+<td>Partial</td>
+<td>Database and ALB lack <code>cost-center</code>; log bucket untagged. Activation shown only in a screenshot.</td>
+</tr>
+<tr>
+<td><strong>T10</strong> Architecture doc, deploy and restore runbooks. <em>Claim: delivered.</em></td>
+<td>D-02, D-04 against E-01, E-03</td>
+<td>Partial</td>
+<td>Architecture doc shows a Multi-AZ database and NAT per AZ, which do not exist.</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Risks, ranked</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>Impact</th>
+<th>Evidence</th>
+<th>Fix effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Admin IAM users with a long-lived key and a console login without MFA: one leaked credential gives full control of the account.</td>
+<td>High</td>
+<td>E-05, E-09</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Single-AZ production database: an AZ outage or maintenance event takes the product down, while documents say it is protected.</td>
+<td>High</td>
+<td>E-03, T-01, D-01</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>3</td>
+<td>EKS API open to the internet: cluster access depends only on credentials.</td>
+<td>High</td>
+<td>E-02</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>4</td>
+<td>No WAF in front of the public application.</td>
+<td>Medium</td>
+<td>E-07</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Backup retention 7 days instead of 14; restore not proven inside the record window.</td>
+<td>Medium</td>
+<td>E-03, D-04</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>6</td>
+<td>One NAT gateway: losing us-east-1a cuts outbound traffic for all private workloads.</td>
+<td>Medium</td>
+<td>E-01</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Architecture document does not match reality, which misleads future operators and auditors.</td>
+<td>Low</td>
+<td>D-02</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Tag gaps make cost reporting by team incomplete.</td>
+<td>Low</td>
+<td>E-08</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Recommendations</h2>
+<p><strong>Before the platform is treated as complete</strong> (gap items, under the current SOW): remove both admin IAM users and the access key, and move remaining people to SSO (5.1, 5.3); enable Multi-AZ through Terraform, not the console (3.2); restrict or disable the public EKS endpoint (2.2); deploy and associate the WAF (8.1, 8.2); set backup retention to 14 days (4.1); add NAT gateways in us-east-1b and us-east-1c (1.3); correct the architecture document (10.1).</p>
+<p><strong>Evidence still needed from the vendor:</strong> a production pipeline run that passes the approval gate (7.3); a restore test inside the record window, with its CloudTrail events (4.3); billing tag activation shown by the client's own admin (9.2).</p>
+<p><strong>Re-check:</strong> after fixes, re-run the evidence kit and drift check for the changed items only, and issue a new version of this report. The completion range can inform the milestone decision; contractual consequences are for the client and its counsel.</p>
+<p><strong>Vendor right of reply</strong> (draft sent 2026-10-16, three business days): the vendor accepted 1.3, 4.1, 8.1 and 8.2. It disputed 3.2, stating Multi-AZ was turned off at the client's request to save cost. No written change request was found in D-01 to D-04, so the status stays <em>Contradicted</em> until the client confirms or rejects that request.</p>
+<h2>7. Evidence register</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Source</th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-00 to E-10</td>
+<td>Evidence kit bundle, 2026-10-13, read-only role; SHA-256 of each file in <code>manifest.json</code></td>
+<td>L1</td>
+</tr>
+<tr>
+<td>T-01</td>
+<td><code>terraform plan -refresh-only</code> and <code>terraform plan</code> on <code>infra/prod</code>, <code>-lock=false</code>, read-only role</td>
+<td>L2</td>
+</tr>
+<tr>
+<td>R-01</td>
+<td>Platform repository: <code>main</code> branch and unmerged branches, 2026-03-02 to 2026-09-30</td>
+<td>L3</td>
+</tr>
+<tr>
+<td>P-01</td>
+<td>CI run history exported by the client's admin</td>
+<td>L1</td>
+</tr>
+<tr>
+<td>D-01 to D-04</td>
+<td>Vendor status report, architecture document v1.3, tagging handover note, runbooks with restore record</td>
+<td>L4</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Independence and sign-off</h2>
+<p>I have no commercial relationship with the vendor and no stake in the outcome. Remediation work is not part of this assessment. Evidence was collected with read-only access; nothing in the account was changed, and the reviewer role was removed on 2026-10-17.</p>
+<p>Scripts collected facts through read-only API calls. I reviewed the evidence for every criterion and assigned every status myself; the scripts do not assign statuses.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+<th>Signature</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reviewer</td>
+<td>Tales Valcacer</td>
+<td><em>sample, not signed</em></td>
+<td></td>
+</tr>
+<tr>
+<td>Client acknowledgement</td>
+<td>[Client representative]</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></main><div class='footer'>Sample assessment: fictional company and vendor, written to show the method. Not a client deliverable.</div></body></html>

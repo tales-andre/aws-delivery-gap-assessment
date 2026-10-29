@@ -1,0 +1,46 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DenyObjectReadsExceptTerraformState",
+      "Effect": "Deny",
+      "Action": ["s3:GetObject", "s3:GetObjectVersion", "s3:GetObjectAttributes", "s3:GetObjectTorrent"],
+      "NotResource": ["arn:aws:s3:::REPLACE_STATE_BUCKET/REPLACE_STATE_KEY"]
+    },
+    {
+      "Sid": "DenySecretsAndDataPlaneReads",
+      "Effect": "Deny",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:BatchGetSecretValue",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "dynamodb:GetItem",
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "rds-data:*",
+        "athena:GetQueryResults",
+        "logs:GetLogEvents",
+        "logs:FilterLogEvents",
+        "logs:StartQuery",
+        "ec2:GetPasswordData",
+        "ec2:GetConsoleOutput",
+        "ec2:GetConsoleScreenshot",
+        "kinesis:GetRecords",
+        "sqs:ReceiveMessage"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DenyKmsDecryptOutsideS3State",
+      "Effect": "Deny",
+      "Action": "kms:Decrypt",
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": { "kms:ViaService": "s3.REPLACE_REGION.amazonaws.com" }
+      }
+    }
+  ]
+}

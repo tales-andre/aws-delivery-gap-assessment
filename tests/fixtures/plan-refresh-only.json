@@ -1,0 +1,47 @@
+{
+  "format_version": "1.2",
+  "terraform_version": "1.11.3",
+  "resource_drift": [
+    {
+      "address": "module.db.aws_db_instance.this[0]",
+      "mode": "managed",
+      "type": "aws_db_instance",
+      "name": "this",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["update"],
+        "before": {"identifier": "fieldwork-prod-db", "multi_az": true, "backup_retention_period": 14, "password": "redacted-in-state"},
+        "after": {"identifier": "fieldwork-prod-db", "multi_az": false, "backup_retention_period": 7, "password": "redacted-in-state"}
+      }
+    },
+    {
+      "address": "aws_security_group.alb",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "alb",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": ["delete"],
+        "before": {"name": "alb"},
+        "after": null
+      }
+    }
+  ],
+  "resource_changes": [
+    {
+      "address": "module.db.aws_db_instance.this[0]",
+      "type": "aws_db_instance",
+      "change": {"actions": ["no-op"], "before": {}, "after": {}}
+    },
+    {
+      "address": "aws_wafv2_web_acl_association.alb",
+      "type": "aws_wafv2_web_acl_association",
+      "change": {"actions": ["create"], "before": null, "after": {"resource_arn": "arn:aws:elasticloadbalancing:..."}}
+    },
+    {
+      "address": "data.aws_caller_identity.current",
+      "type": "aws_caller_identity",
+      "change": {"actions": ["read"], "before": null, "after": {}}
+    }
+  ]
+}

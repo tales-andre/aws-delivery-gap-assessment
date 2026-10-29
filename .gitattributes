@@ -1,0 +1,3 @@
+docs/demo-evidence/** -text
+*.pdf binary
+*.png binary

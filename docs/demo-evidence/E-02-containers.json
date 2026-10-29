@@ -1,0 +1,54 @@
+{
+  "check": "containers",
+  "collected_at": "2026-10-29T10:46:44.600694+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-02",
+  "facts": {
+    "ecs_clusters": [],
+    "eks_clusters": [
+      {
+        "control_plane_logs": [
+          "api",
+          "audit",
+          "authenticator"
+        ],
+        "created_at": "2026-10-29T07:46:42.659000-03:00",
+        "endpoint_private_access": false,
+        "endpoint_public_access": true,
+        "name": "fieldwork-prod",
+        "nodegroups": [
+          {
+            "azs": [
+              "us-east-1a",
+              "us-east-1b",
+              "us-east-1c"
+            ],
+            "instance_types": [
+              "m6i.large"
+            ],
+            "name": "general",
+            "scaling": {
+              "desiredSize": 3,
+              "maxSize": 6,
+              "minSize": 3
+            }
+          }
+        ],
+        "oidc_issuer": "https://oidc.eks.us-east-1.amazonaws.com/id/FS7FVzcgSo",
+        "public_access_cidrs": [
+          "0.0.0.0/0"
+        ],
+        "status": "ACTIVE",
+        "tags": {
+          "cost-center": "cc-210",
+          "env": "prod",
+          "owner": "platform"
+        },
+        "version": "1.30"
+      }
+    ]
+  },
+  "region": "us-east-1",
+  "title": "EKS clusters, node groups and ECS clusters"
+}

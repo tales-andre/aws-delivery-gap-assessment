@@ -1,0 +1,14 @@
+{
+  "check": "identity",
+  "collected_at": "2026-10-29T10:46:43.962035+00:00",
+  "collection_status": "complete",
+  "errors": [],
+  "evidence_id": "E-00",
+  "facts": {
+    "account": "123456789012",
+    "caller_arn": "arn:aws:sts::123456789012:user/moto",
+    "region": "us-east-1"
+  },
+  "region": "us-east-1",
+  "title": "Account and caller identity"
+}
