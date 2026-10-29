@@ -28,15 +28,26 @@ BLOCKED_READS = frozenset(
         "GetParameter",
         "GetParameters",
         "GetParametersByPath",
+        "GetParameterHistory",
         "GetItem",
         "GetRecords",
         "GetLogEvents",
+        "GetLogRecord",
         "GetQueryResults",
         "GetPasswordData",
         "GetConsoleOutput",
         "GetConsoleScreenshot",
         "GetSessionToken",
         "GetFederationToken",
+        # Calls that hand out credentials or tokens (one can also create a database user).
+        "GetAuthorizationToken",
+        "GetClusterCredentials",
+        "GetClusterCredentialsWithIAM",
+        "GetRoleCredentials",
+        "GetCredentialsForIdentity",
+        "GetOpenIdToken",
+        "GetOpenIdTokenForDeveloperIdentity",
+        "GetDownloadUrlForLayer",
     }
 )
 

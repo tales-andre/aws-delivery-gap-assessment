@@ -19,8 +19,13 @@ def test_write_operations_are_blocked(op):
     assert not is_allowed(op)
 
 
-@pytest.mark.parametrize("op", ["GetObject", "GetSecretValue", "GetParameter", "GetItem", "GetLogEvents"])
+@pytest.mark.parametrize("op", ["GetObject", "GetSecretValue", "GetParameter", "GetParameterHistory", "GetItem", "GetLogEvents"])
 def test_data_reads_are_blocked(op):
+    assert not is_allowed(op)
+
+
+@pytest.mark.parametrize("op", ["GetAuthorizationToken", "GetClusterCredentials", "GetRoleCredentials", "GetCredentialsForIdentity"])
+def test_reads_that_issue_credentials_are_blocked(op):
     assert not is_allowed(op)
 
 

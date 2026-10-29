@@ -16,6 +16,7 @@
         "ssm:GetParameter",
         "ssm:GetParameters",
         "ssm:GetParametersByPath",
+        "ssm:GetParameterHistory",
         "dynamodb:GetItem",
         "dynamodb:BatchGetItem",
         "dynamodb:Query",
@@ -23,13 +24,19 @@
         "rds-data:*",
         "athena:GetQueryResults",
         "logs:GetLogEvents",
+        "logs:GetLogRecord",
         "logs:FilterLogEvents",
         "logs:StartQuery",
         "ec2:GetPasswordData",
         "ec2:GetConsoleOutput",
         "ec2:GetConsoleScreenshot",
         "kinesis:GetRecords",
-        "sqs:ReceiveMessage"
+        "sqs:ReceiveMessage",
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "redshift:GetClusterCredentials",
+        "redshift:GetClusterCredentialsWithIAM"
       ],
       "Resource": "*"
     },

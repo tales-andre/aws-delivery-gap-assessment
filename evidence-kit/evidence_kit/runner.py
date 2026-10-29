@@ -4,7 +4,7 @@ Bundle layout (one folder per run):
 
     E-00-identity.json ... E-10-well_architected.json   facts + errors per check
     manifest.json                                         run metadata + SHA-256 of every file
-    summary.md                                            facts table with an empty "Reviewer status" column
+    summary.md                                            facts table with an empty "Reviewer notes" column
 """
 
 from __future__ import annotations

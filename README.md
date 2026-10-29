@@ -4,7 +4,7 @@
 
 This repository is how I do that for AWS work: a written **method**, a small **read-only evidence kit** (Python + boto3, tested offline), and a **sample report** about a fictional company and vendor that shows the output.
 
-> **Honesty note.** This is an open-source method and demo, not a record of a client engagement. The sample report describes a fictional company (Acme Fieldwork, Inc.) and a fictional, redacted vendor. Its account data is simulated.
+> **Honesty note.** This is an open-source method and demo, not a record of a client engagement. The sample report describes a fictional company (Acme Fieldwork, Inc.) and a fictional, unnamed vendor. Its account data is simulated.
 
 ![First page of the sample assessment](docs/sample-report-page1.png)
 
@@ -80,7 +80,7 @@ Real-account usage, IAM templates and the drift check: [evidence-kit/README.md](
 
 ## How it fails safely
 
-- **It cannot write to AWS.** Access is a client-created role with read-only managed policies and an explicit deny on data reads (objects, secrets, parameters, table items, log events). In code, a guard checks every boto3 call before the request is built and blocks anything that is not `Describe/List/Get/Lookup/Search`, plus data reads like `GetObject` and `GetSecretValue`. Tests prove a blocked write never reaches the (simulated) account.
+- **It cannot write to AWS.** Access is a client-created role with read-only managed policies and an explicit deny on data reads (objects, secrets, parameters, table items, log events). In code, a guard checks every boto3 call before the request is built and blocks anything that is not `Describe/List/Get/Lookup/Search`, plus data reads like `GetObject` and `GetSecretValue` and calls that hand out credentials, such as `GetAuthorizationToken`. Tests prove a blocked write never reaches the (simulated) account.
 - **It cannot change Terraform state or git history.** The drift wrapper only runs `init`, `plan`, `show` and `version`, refuses `-auto-approve` and `-destroy`, and requires `-lock=false`. The git wrapper only runs read commands.
 - **Missing access is never a finding.** A call that fails is written as `NOT COLLECTED` with the error, and a check that collected nothing never prints "none found". In the report, the reviewer marks such criteria *Unable to assess*, which counts as not delivered and is listed in the scope limits.
 - **No secrets in the evidence.** Access key IDs are cut to four characters; drift output lists attribute names, never values; Terraform state is read in place and not copied.

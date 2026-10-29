@@ -5,12 +5,12 @@
 | Field | Detail |
 |---|---|
 | **Client** | Acme Fieldwork, Inc. (fictional SaaS for field-service scheduling) |
-| **Vendor** | [Vendor] (fictional, name redacted) |
+| **Vendor** | [Vendor] (fictional, unnamed) |
 | **Contract** | SOW "Production AWS platform", signed 2026-03-02; vendor reported completion 2026-09-30 |
-| **AWS account** | [redacted], region us-east-1, production environment only |
+| **AWS account** | Example account (simulated), region us-east-1, production environment only |
 | **Evidence collected** | 2026-10-12 to 2026-10-14, read-only role (SecurityAudit + ReadOnlyAccess, data reads denied) |
 | **Reviewer** | Tales Valcacer, AWS Certified Solutions Architect – Professional |
-| **Version** | 1.0, 2026-10-19 (after vendor right of reply) |
+| **Version** | 1.0, 2026-10-22 (after vendor right of reply) |
 
 ## 1. Executive summary
 
@@ -104,7 +104,7 @@ Weights are the SOW line-item shares of the contract value.
 
 ## 8. Independence and sign-off
 
-I have no commercial relationship with the vendor and no stake in the outcome. Remediation work is not part of this assessment. Evidence was collected with read-only access; nothing in the account was changed, and the reviewer role was removed on 2026-10-17.
+I have no commercial relationship with the vendor and no stake in the outcome. Remediation work is not part of this assessment. Evidence was collected with read-only access; nothing in the account was changed, and the reviewer role was removed on 2026-10-22.
 
 Scripts collected facts through read-only API calls. I reviewed the evidence for every criterion and assigned every status myself; the scripts do not assign statuses.
 

@@ -43,7 +43,8 @@ BROWSERS = [
 ]
 
 CSS = """
-@page { size: Letter; margin: 13mm 14mm 16mm 14mm; }
+@page { size: Letter; margin: 13mm 14mm 16mm 14mm;
+  @bottom-center { content: "Sample assessment: fictional company and vendor, written to show the method. Not a client deliverable."; font-family: "Segoe UI", Arial, sans-serif; font-size: 7.5pt; color: #5b6672; } }
 :root { --ink:#1d232b; --muted:#5b6672; --line:#d5dbe1; --accent:#0b5c8a; --warn:#8a4b00; --bg:#ffffff; }
 * { box-sizing: border-box; }
 body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); background: var(--bg); font-size: 9.1pt; line-height: 1.38; margin: 0; }
@@ -58,7 +59,8 @@ th { background: #eef2f5; }
 tr { break-inside: avoid; }
 code { font-family: Consolas, monospace; font-size: 8.2pt; background: #f2f4f6; padding: 0 2px; }
 .banner { border: 1.5px solid var(--warn); color: var(--warn); background: #fff6e8; font-weight: 600; padding: 6px 9px; border-radius: 4px; }
-.footer { position: fixed; bottom: -11mm; left: 0; right: 0; text-align: center; font-size: 7.5pt; color: var(--muted); }
+.footer { max-width: 190mm; margin: 10px auto 16px; text-align: center; font-size: 7.5pt; color: var(--muted); }
+@media print { .footer { display: none; } }
 """
 
 

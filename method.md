@@ -1,6 +1,6 @@
 # Assessment method: contracted scope vs. delivered AWS work
 
-This is the method I follow when a client asks: *"The vendor says the work is done. What was actually implemented, what is missing, and how complete is the project?"*
+This is my method for answering a client who asks: *"The vendor says the work is done. What was actually implemented, what is missing, and how complete is the project?"*
 
 The method is independent, evidence-based, read-only and human-led. Scripts collect facts; I make every judgment and sign the report. A worked example about a fictional company is in [`sample-report/`](sample-report/gap-assessment.md).
 
@@ -123,7 +123,7 @@ How typical SOW items are checked. All calls are reads; the evidence kit automat
 
 - Scripts in this repository only **collect** facts through read-only calls and do arithmetic on the scoring file. They do not decide whether anything is complete.
 - I read the evidence for every criterion, assign every status, write every finding and sign the report. The report says which tools collected which evidence.
-- When a client requires the review to be done without AI tools, I work that way: the evidence kit contains no AI component, and the judgments and the report text are mine.
+- The evidence kit contains no AI component. Every status and finding in the report is my judgment.
 
 ## 9. Client data
 
